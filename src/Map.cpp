@@ -17,14 +17,11 @@ Map::Map(const char *path)
 	while (std::getline(infile, line))
 	{
 		if (this->width < line.length())
-			this->width = line.length();
+			this->width = line.length() - 1; // To get rid of newline.
 
 		this->map.push_back(string(line));
 		this->height++;
 	}
-	if (this->width != 1)
-		this->width -= 1;
-	std::cout << this->width << " " << this->height << "\n";
 	infile.close();
 }
 

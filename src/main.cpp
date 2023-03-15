@@ -3,16 +3,28 @@
 
 int main()
 {
-	Game *game = new Game("Bombi", 600, 600);
-	game->initGame();
-
 	Map map("maps/demo_map.bom");
 	map.checkMap();
+	Game *game = new Game("Bombi",	map.getMapWidth() * 32,
+									map.getMapHeight() * 32);
+	game->initGame();
+
 
 	for (int i = 0; i < map.getMapHeight(); i++)
+	{
 		for (int j = 0; j < map.getMapWidth(); j++)
+		{
+			char *tile;
+
 			if (map.getElement(j, i) == '1')
-				game->addTile(new Tile(game->getRenderer(), j * 32, i * 32, "assets/wall.png"));
+				tile = (char *)"assets/wall.png";
+			else if (map.getElement(j, i) == '0')
+				tile = (char *)"assets/grass.png";
+			else
+				continue ;
+			game->addTile(new Tile(game->getRenderer(), j * 32, i * 32, tile));
+		}
+	}
 
 	game->loop();
 
